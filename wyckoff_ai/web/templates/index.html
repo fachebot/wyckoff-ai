@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>威科夫分析系统</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- 顶部导航 -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">📊</span>
+                <span class="logo-text">威科夫分析系统</span>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link active">首页</a>
+                <a href="/docs" class="nav-link" target="_blank">API 文档</a>
+            </nav>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main">
+            <!-- 控制面板 -->
+            <section class="control-panel">
+                <div class="control-group">
+                    <label for="symbol-select">交易对</label>
+                    <select id="symbol-select" class="select">
+                        <option value="BTC-USDT">BTC/USDT</option>
+                        <option value="ETH-USDT">ETH/USDT</option>
+                        <option value="BNB-USDT">BNB/USDT</option>
+                        <option value="SOL-USDT">SOL/USDT</option>
+                        <option value="XRP-USDT">XRP/USDT</option>
+                        <option value="ADA-USDT">ADA/USDT</option>
+                        <option value="DOGE-USDT">DOGE/USDT</option>
+                        <option value="AVAX-USDT">AVAX/USDT</option>
+                        <option value="DOT-USDT">DOT/USDT</option>
+                        <option value="LINK-USDT">LINK/USDT</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="timeframe-select">时间周期</label>
+                    <select id="timeframe-select" class="select">
+                        <option value="5m">5 分钟</option>
+                        <option value="15m">15 分钟</option>
+                        <option value="30m">30 分钟</option>
+                        <option value="1h" selected>1 小时</option>
+                        <option value="2h">2 小时</option>
+                        <option value="4h">4 小时</option>
+                        <option value="1d">1 天</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="limit-input">K 线数量</label>
+                    <input type="number" id="limit-input" class="input" value="200" min="50" max="500">
+                </div>
+                <button id="analyze-btn" class="btn btn-primary">
+                    <span class="btn-icon">🔍</span>
+                    开始分析
+                </button>
+                <button id="refresh-btn" class="btn btn-secondary" title="刷新数据">
+                    <span class="btn-icon">🔄</span>
+                </button>
+            </section>
+
+            <!-- 状态栏 -->
+            <section class="status-bar" id="status-bar">
+                <div class="status-item" id="status-market">
+                    <span class="status-label">市场结构</span>
+                    <span class="status-value" id="market-structure">--</span>
+                </div>
+                <div class="status-item" id="status-bias">
+                    <span class="status-label">方向偏向</span>
+                    <span class="status-value" id="bias-value">--</span>
+                </div>
+                <div class="status-item" id="status-state">
+                    <span class="status-label">当前阶段</span>
+                    <span class="status-value" id="state-value">--</span>
+                </div>
+                <div class="status-item" id="status-events">
+                    <span class="status-label">检测事件</span>
+                    <span class="status-value" id="events-count">--</span>
+                </div>
+            </section>
+
+            <!-- 图表区域 -->
+            <section class="chart-section">
+                <div class="chart-container" id="chart-container">
+                    <div class="chart-loading" id="chart-loading">
+                        <div class="spinner"></div>
+                        <p>正在加载图表...</p>
+                    </div>
+                    <div id="kline-chart"></div>
+                    <div id="volume-chart"></div>
+                </div>
+            </section>
+
+            <!-- 底部信息面板 -->
+            <section class="info-panels">
+                <!-- 事件列表 -->
+                <div class="panel events-panel">
+                    <h3 class="panel-title">
+                        <span class="panel-icon">📌</span>
+                        威科夫事件
+                    </h3>
+                    <div class="events-list" id="events-list">
+                        <p class="empty-hint">选择交易对并点击"开始分析"</p>
+                    </div>
+                </div>
+
+                <!-- 预测面板 -->
+                <div class="panel prediction-panel">
+                    <h3 class="panel-title">
+                        <span class="panel-icon">🎯</span>
+                        交易预测
+                    </h3>
+                    <div class="predictions-list" id="predictions-list">
+                        <p class="empty-hint">分析完成后显示预测</p>
+                    </div>
+                </div>
+
+                <!-- 操作建议 -->
+                <div class="panel action-panel">
+                    <h3 class="panel-title">
+                        <span class="panel-icon">💡</span>
+                        操作建议
+                    </h3>
+                    <div class="action-content" id="action-content">
+                        <p class="empty-hint">等待分析结果</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>威科夫分析系统 v1.0 | 仅供研究参考，不构成投资建议</p>
+        </footer>
+    </div>
+
+    <!-- 加载 TradingView Lightweight Charts -->
+    <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
+

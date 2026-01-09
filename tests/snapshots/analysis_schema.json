@@ -1,0 +1,19 @@
+{
+  "top_level_keys": [
+    "asof_ts",
+    "event_forward_stats",
+    "events",
+    "exchange",
+    "levels",
+    "market_structure",
+    "probabilistic_scenarios",
+    "range",
+    "regime_hint",
+    "regime_method",
+    "risk_notes",
+    "scenarios",
+    "state_machine",
+    "symbol",
+    "timeframe"
+  ]
+}

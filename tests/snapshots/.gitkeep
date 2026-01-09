@@ -1,0 +1,4 @@
+# 快照目录
+# 存放回归测试的快照数据
+# 使用 pytest --update-snapshots 更新快照
+

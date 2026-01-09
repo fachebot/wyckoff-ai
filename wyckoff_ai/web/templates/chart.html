@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ symbol }} - 威科夫分析</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .chart-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .chart-page .chart-section {
+            flex: 1;
+            padding: 0;
+        }
+        .chart-page .chart-container {
+            height: 100%;
+            border-radius: 0;
+        }
+        .chart-page #kline-chart {
+            height: 75%;
+        }
+        .chart-page #volume-chart {
+            height: 25%;
+        }
+    </style>
+</head>
+<body class="chart-page">
+    <header class="header">
+        <div class="logo">
+            <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                <span class="logo-icon">📊</span>
+                <span class="logo-text">威科夫分析</span>
+            </a>
+        </div>
+        <div class="chart-info" style="display: flex; align-items: center; gap: 20px;">
+            <span id="symbol-display" style="font-size: 18px; font-weight: 600;">{{ symbol }}</span>
+            <select id="timeframe-select" class="select" style="min-width: 100px;">
+                <option value="5m">5 分钟</option>
+                <option value="15m">15 分钟</option>
+                <option value="30m">30 分钟</option>
+                <option value="1h" selected>1 小时</option>
+                <option value="2h">2 小时</option>
+                <option value="4h">4 小时</option>
+                <option value="1d">1 天</option>
+            </select>
+            <button id="refresh-btn" class="btn btn-primary">
+                🔄 刷新分析
+            </button>
+        </div>
+    </header>
+    
+    <section class="chart-section">
+        <div class="chart-container" id="chart-container">
+            <div class="chart-loading" id="chart-loading">
+                <div class="spinner"></div>
+                <p>正在加载图表...</p>
+            </div>
+            <div id="kline-chart"></div>
+            <div id="volume-chart"></div>
+        </div>
+    </section>
+    
+    <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+    <script>
+        const SYMBOL = '{{ symbol }}'.replace('/', '-');
+    </script>
+    <script src="/static/js/app.js"></script>
+    <script>
+        // 页面加载后自动分析当前交易对
+        document.addEventListener('DOMContentLoaded', () => {
+            const timeframe = document.getElementById('timeframe-select').value;
+            loadAnalysis(SYMBOL, timeframe, 300);
+            
+            // 时间周期变化时刷新
+            document.getElementById('timeframe-select').addEventListener('change', (e) => {
+                loadAnalysis(SYMBOL, e.target.value, 300);
+            });
+            
+            // 刷新按钮
+            document.getElementById('refresh-btn').addEventListener('click', () => {
+                const tf = document.getElementById('timeframe-select').value;
+                loadAnalysis(SYMBOL, tf, 300);
+            });
+        });
+    </script>
+</body>
+</html>
+
